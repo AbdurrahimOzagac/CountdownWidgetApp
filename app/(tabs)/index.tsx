@@ -2,20 +2,40 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
-  const [time, setTime] = useState(new Date());
+
+  const [today, setToday] = useState(new Date());
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
 
-    return () => clearInterval(timer);
-  }, []);
+    const now = new Date();
+
+    const nextMidnight = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1,
+      0, 0, 0, 0
+    );
+
+    const timeUntilMidnight = nextMidnight.getTime() - now.getTime();
+
+    const timer = setTimeout(() => {
+      setToday(new Date());
+    }, timeUntilMidnight);
+
+    return () => clearTimeout(timer);
+  }, [today]);
+
+  
+  const formattedDate = today.toLocaleDateString('tr-TR', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long', 
+    day: 'numeric', 
+  });
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Şu anki saat:</Text>
-      <Text style={styles.time}>{time.toLocaleTimeString()}</Text>
+      <Text style={styles.text}>Bugün: {formattedDate}</Text>
     </View>
   );
 }
@@ -28,13 +48,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   text: {
-    color: '#fff',
-    fontSize: 20,
-  },
-  time: {
     color: '#0f0',
-    fontSize: 40,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 10,
+    textAlign: 'center',
   },
 });

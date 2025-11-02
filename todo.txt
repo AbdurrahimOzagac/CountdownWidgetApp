@@ -1,0 +1,7 @@
+1-kullanıcıdan input alma kutusu. text olarak
+    
+    bu input kalıcı olsun, sistemde yedeklensin
+
+2-bu kutuları 3 tane yap. text-tarih(gün)-text alsın.
+
+3- widgete geçilebilir

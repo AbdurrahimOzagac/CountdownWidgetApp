@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function HomeScreen() {
 
   const [today, setToday] = useState(new Date());
+
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
 
@@ -35,7 +37,19 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Bugün: {formattedDate}</Text>
+      {/* Kullanıcıdan metin girişi */}
+      <TextInput
+        style={styles.input}
+        placeholder="Bugünün mesajını yaz..."
+        placeholderTextColor="#999"
+        value={message}
+        onChangeText={setMessage}
+      />
+
+      {/* Mesaj + tarih */}
+      <Text style={styles.text}>
+        {message ? `${message} — ${formattedDate}` : formattedDate}
+      </Text>
     </View>
   );
 }
@@ -46,11 +60,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000',
+    padding: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#555',
+    color: '#fff',
+    width: '100%',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+    fontSize: 18,
   },
   text: {
     color: '#0f0',
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 22,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
